@@ -38,12 +38,12 @@ Description of the algorithm :
 # The following class is the input and output circuit representation for a
 # QISKit compiler
 from qiskit.dagcircuit import DAGCircuit
-
+from challenge_evaluation import *
 
 def compiler_function(dag_circuit, coupling_map=None, gate_costs=None):
     """
     Modify a DAGCircuit based on a gate cost function.
-
+    
     Instructions:
         Your submission involves filling in the implementation
         of this function. The function takes as input a DAGCircuit
@@ -93,3 +93,12 @@ def compiler_function(dag_circuit, coupling_map=None, gate_costs=None):
     #####################
     # Return the compiled dag circuit
     return compiled_dag
+
+
+if __name__ == "__main__":
+    help(DAGCircuit)
+    print(score(compiler_function))
+    # obj = open("circuits/random0_n16_d16.qasm","r")
+    # qasm = obj.read()
+    # DC = qasm_to_dag_circuit(qasm)
+    # compiler_function(DC)
