@@ -1,0 +1,31 @@
+{
+    "version": "0.1.0",
+    "isShellCommand": true,
+    "suppressTaskName": true,
+    "tasks": [{
+            "taskName": "PDFLaTeX",
+            "command": "pdflatex",
+            "isBuildCommand": true,
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "filename.tex"
+            ]}, {
+            "taskName": "BibTeX",
+            "command": "bibtex",
+            "isTestCommand": true,
+            "args": ["filename.aux"]
+            },
+           {
+            "taskName": "XeLaTeX",
+            "command": "xelatex",
+            "isBuildCommand": true,
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "filename.tex"
+            ]},
+        ]
+}

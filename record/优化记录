@@ -1,0 +1,605 @@
+第一个程序
+1192
+将swap中使用的cnot门改为layout允许的cnot，以减少H门的使用
+1024
+执行SWAP之后，不用再次使用SWAP进行量子态还原，而是局部调整量子比特的ID
+522
+
+程序：
+test_circuit_filenames['circuits/random%d_n16_d16.qasm' % 0] = load_coupling(maps_q16[0])["coupling_map"]
+标准的逻辑门数量4608
+标准算法为14866
+目前优化为16312
+其中共出现了324次swap，这消耗了11016个
+
+
+
+
+360----504
+不执行    
+# Simplify single qubit gates
+compiled_dag = optimize_1q_gates(compiled_dag)
+则变为552，效率变为4.33
+
+
+5-7执行完5q和16q时的得分
+(0.8760369509745699, 14.665244026027699)
+具体而言
+{'circuits/random0_n5_d5.qasm': {'optimizer_time': 0.546875, 'reference_time': 6.453125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+'circuits/random1_n5_d5.qasm': {'optimizer_time': 0.453125, 'reference_time': 7.34375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 552, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+ 'circuits/random2_n5_d5.qasm': {'optimizer_time': 0.578125, 'reference_time': 6.65625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 662, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random3_n5_d5.qasm': {'optimizer_time': 0.453125, 'reference_time': 7.515625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 492, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+  'circuits/random4_n5_d5.qasm': {'optimizer_time': 0.609375, 'reference_time': 6.28125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 828, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+   'circuits/random5_n5_d5.qasm': {'optimizer_time': 0.40625, 'reference_time': 6.171875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+    'circuits/random6_n5_d5.qasm': {'optimizer_time': 0.5, 'reference_time': 6.796875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+     'circuits/random7_n5_d5.qasm': {'optimizer_time': 0.609375, 'reference_time': 6.703125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 776, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+      'circuits/random8_n5_d5.qasm': {'optimizer_time': 0.515625, 'reference_time': 7.1875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 548, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random9_n5_d5.qasm': {'optimizer_time': 0.484375, 'reference_time': 6.53125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 752, 'coupling_correct_optimized': True, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random0_n16_d16.qasm': {'optimizer_time': 8.828125, 'reference_time': 152.90625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 16312, 'coupling_correct_optimized': True, 'cost_reference': 14866, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random1_n16_d16.qasm': {'optimizer_time': 11.4375, 'reference_time': 142.375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 25390, 'coupling_correct_optimized': True, 'cost_reference': 20145, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random2_n16_d16.qasm': {'optimizer_time': 7.828125, 'reference_time': 182.21875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12468, 'coupling_correct_optimized': True, 'cost_reference': 10156, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random3_n16_d16.qasm': {'optimizer_time': 8.6875, 'reference_time': 226.859375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 15246, 'coupling_correct_optimized': True, 'cost_reference': 13825, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random4_n16_d16.qasm': {'optimizer_time': 8.90625, 'reference_time': 128.59375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 15818, 'coupling_correct_optimized': True, 'cost_reference': 12606, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random5_n16_d16.qasm': {'optimizer_time': 9.828125, 'reference_time': 135.421875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 17752, 'coupling_correct_optimized': True, 'cost_reference': 12269, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random6_n16_d16.qasm': {'optimizer_time': 11.234375, 'reference_time': 149.140625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 25248, 'coupling_correct_optimized': True, 'cost_reference': 20867, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random7_n16_d16.qasm': {'optimizer_time': 8.046875, 'reference_time': 183.0625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12770, 'coupling_correct_optimized': True, 'cost_reference': 9780, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random8_n16_d16.qasm': {'optimizer_time': 8.828125, 'reference_time': 168.875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 15152, 'coupling_correct_optimized': True, 'cost_reference': 11595, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+      'circuits/random9_n16_d16.qasm': {'optimizer_time': 8.515625, 'reference_time': 132.546875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.71875, 'cost_optimized': 15474, 'coupling_correct_optimized': True, 'sim_time_opti': 1.03125, 'cost_reference': 13240, 'coupling_correct_reference': True, 'state_correct_optimized': True}}
+
+完成20Q的得分为：
+(0.777822253135997, 20.47407553043496)
+具体而言：
+{'circuits/random0_n20_d20.qasm': {'optimizer_time': 20.078125, 'reference_time': 253.875, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 37470, 'coupling_correct_optimized': True, 'cost_reference': 25419, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+ 'circuits/random1_n20_d20.qasm': {'optimizer_time': 23.3125, 'reference_time': 345.609375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 49482, 'coupling_correct_optimized': True, 'cost_reference': 38279, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random2_n20_d20.qasm': {'optimizer_time': 12.78125, 'reference_time': 493.515625, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 19858, 'coupling_correct_optimized': True, 'cost_reference': 18154, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random3_n20_d20.qasm': {'optimizer_time': 16.78125, 'reference_time': 344.125, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 28716, 'coupling_correct_optimized': True, 'cost_reference': 21628, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random4_n20_d20.qasm': {'optimizer_time': 13.453125, 'reference_time': 477.828125, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 21490, 'coupling_correct_optimized': True, 'cost_reference': 17216, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random5_n20_d20.qasm': {'optimizer_time': 17.796875, 'reference_time': 245.96875, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 37944, 'coupling_correct_optimized': True, 'cost_reference': 26147, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random6_n20_d20.qasm': {'optimizer_time': 21.453125, 'reference_time': 335.140625, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 51488, 'coupling_correct_optimized': True, 'cost_reference': 38724, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random7_n20_d20.qasm': {'optimizer_time': 12.53125, 
+ 'reference_time': 429.953125, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 22724, 'coupling_correct_optimized': True, 'cost_reference': 17809, 'coupling_correct_reference': True, 'state_correct_optimized': True}, 
+
+ 'circuits/random8_n20_d20.qasm': {'optimizer_time': 15.0, 'reference_time': 330.34375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 26724, 'coupling_correct_optimized': True, 'cost_reference': 21829, 'coupling_correct_reference': True, 'state_correct_optimized': True},
+
+  'circuits/random9_n20_d20.qasm': {'optimizer_time': 13.203125, 'reference_time': 469.109375, 'cost_original': 7200, 'coupling_correct_original': False, 'sim_time_orig': 0.46875, 'cost_optimized': 22188, 'coupling_correct_optimized': True, 'sim_time_opti': 1.875, 'cost_reference': 19484, 'coupling_correct_reference': True, 'state_correct_optimized': True}}
+
+  5-10:执行完5q和16Q的情况：
+(0.9733521312740441, 15.699158068167467)
+  具体而言：
+{'optimizer_time': 0.375, 'reference_time': 5.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 462, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.34375, 'reference_time': 6.546875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 526, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.484375, 'reference_time': 5.9375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 530, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 6.46875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 492, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.4375, 'reference_time': 5.5625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 704, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 5.140625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.421875, 'reference_time': 6.25, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.515625, 'reference_time': 6.125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 678, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 6.515625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 548, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.4375, 'reference_time': 6.296875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 772, 'coupling_correct_optimized': True, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 9.09375, 'reference_time': 147.859375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14976, 'coupling_correct_optimized': True, 'cost_reference': 14866, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 10.453125, 'reference_time': 138.765625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 24166, 'coupling_correct_optimized': True, 'cost_reference': 20145, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.328125, 'reference_time': 183.6875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10848, 'coupling_correct_optimized': True, 'cost_reference': 10156, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.703125, 'reference_time': 208.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13268, 'coupling_correct_optimized': True, 'cost_reference': 13825, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.9375, 'reference_time': 122.078125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12672, 'coupling_correct_optimized': True, 'cost_reference': 12606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.46875, 'reference_time': 131.5625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14386, 'coupling_correct_optimized': True, 'cost_reference': 12269, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 10.09375, 'reference_time': 141.0, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 21268, 'coupling_correct_optimized': True, 'cost_reference': 20867, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.328125, 'reference_time': 171.40625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11646, 'coupling_correct_optimized': True, 'cost_reference': 9780, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.125, 'reference_time': 160.328125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12642, 'coupling_correct_optimized': True, 'cost_reference': 11595, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.703125, 'reference_time': 128.796875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 13854, 'coupling_correct_optimized': True, 'sim_time_opti': 0.265625, 'cost_reference': 13240, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+完成20Q的得分：(0.8921289518532123, 19.09174284587761)
+具体而言：
+{'optimizer_time': 18.890625, 'reference_time': 237.859375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 30296, 'coupling_correct_optimized': True, 'cost_reference': 25419, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 20.65625, 'reference_time': 330.734375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 40164, 'coupling_correct_optimized': True, 'cost_reference': 38279, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 14.828125, 'reference_time': 454.59375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 19208, 'coupling_correct_optimized': True, 'cost_reference': 18154, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 18.125, 'reference_time': 337.125, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 25482, 'coupling_correct_optimized': True, 'cost_reference': 21628, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 15.6875, 'reference_time': 440.09375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 19762, 'coupling_correct_optimized': True, 'cost_reference': 17216, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 19.21875, 'reference_time': 251.171875, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 33120, 'coupling_correct_optimized': True, 'cost_reference': 26147, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 21.125, 'reference_time': 336.40625, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 41176, 'coupling_correct_optimized': True, 'cost_reference': 38724, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 15.875, 'reference_time': 440.140625, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 19738, 'coupling_correct_optimized': True, 'cost_reference': 17809, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 17.203125, 'reference_time': 337.9375, 'cost_original': 7200, 'coupling_correct_original': False, 'cost_optimized': 24460, 'coupling_correct_optimized': True, 'cost_reference': 21829, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 15.84375, 'reference_time': 471.578125, 'cost_original': 7200, 'coupling_correct_original': False, 'sim_time_orig': 0.921875, 'cost_optimized': 19972, 'coupling_correct_optimized': True, 'sim_time_opti': 1.359375, 'cost_reference': 19484, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+
+使用动态规划方法代价太大，16Q的运行时间远远超过标准
+
+
+5-11减少单量子比特门：
+5q：(1.0287003419585992, 15.917164160994563)   具体而言：
+{'optimizer_time': 0.390625, 'reference_time': 5.828125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 462, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 6.5, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 526, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 5.921875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.40625, 'reference_time': 6.375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 492, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 5.703125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 688, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 5.28125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.359375, 'reference_time': 6.21875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.40625, 'reference_time': 6.03125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 670, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.3125, 'reference_time': 6.4375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 548, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.359375, 'reference_time': 6.203125, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.0, 'cost_optimized': 756, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5q和16q：(0.9814995837194825, 16.772670315254437)具体而言：
+{'optimizer_time': 0.359375, 'reference_time': 5.90625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 462, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.421875, 'reference_time': 6.5, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 526, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 5.890625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 6.515625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 492, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.40625, 'reference_time': 5.625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 688, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.34375, 'reference_time': 5.21875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.40625, 'reference_time': 6.46875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.453125, 'reference_time': 6.0625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 670, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 6.78125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 548, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.421875, 'reference_time': 6.15625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 756, 'coupling_correct_optimized': True, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.21875, 'reference_time': 151.515625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14856, 'coupling_correct_optimized': True, 'cost_reference': 14866, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 11.03125, 'reference_time': 142.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 23966, 'coupling_correct_optimized': True, 'cost_reference': 20145, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.265625, 'reference_time': 177.671875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10736, 'coupling_correct_optimized': True, 'cost_reference': 10156, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.8125, 'reference_time': 224.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13084, 'coupling_correct_optimized': True, 'cost_reference': 13825, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.59375, 'reference_time': 124.859375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12584, 'coupling_correct_optimized': True, 'cost_reference': 12606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.796875, 'reference_time': 132.984375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14274, 'coupling_correct_optimized': True, 'cost_reference': 12269, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 9.1875, 'reference_time': 144.953125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20996, 'coupling_correct_optimized': True, 'cost_reference': 20867, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.703125, 'reference_time': 179.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11558, 'coupling_correct_optimized': True, 'cost_reference': 9780, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 7.453125, 'reference_time': 164.453125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12482, 'coupling_correct_optimized': True, 'cost_reference': 11595, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 8.046875, 'reference_time': 129.296875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 13734, 'coupling_correct_optimized': True, 'sim_time_opti': 0.796875, 'cost_reference': 13240, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+进一步合并u3，(1.0514719323638184, 4.444621876156644)
+具体而言
+{'optimizer_time': 2.46875, 'reference_time': 6.84375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.203125, 'reference_time': 7.3125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 469, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.78125, 'reference_time': 6.703125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 472, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.265625, 'reference_time': 7.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 437, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.734375, 'reference_time': 6.625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 643, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.03125, 'reference_time': 6.09375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 469, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.96875, 'reference_time': 6.984375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.375, 'reference_time': 6.8125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 611, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.578125, 'reference_time': 7.15625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 504, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.625, 'reference_time': 6.65625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 713, 'coupling_correct_optimized': True, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 23.734375, 'reference_time': 163.15625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14316, 'coupling_correct_optimized': True, 'cost_reference': 14866, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 26.859375, 'reference_time': 150.625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 23461, 'coupling_correct_optimized': True, 'cost_reference': 20145, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 26.078125, 'reference_time': 190.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10138, 'coupling_correct_optimized': True, 'cost_reference': 10156, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 26.0625, 'reference_time': 232.4375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12485, 'coupling_correct_optimized': True, 'cost_reference': 13825, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 25.40625, 'reference_time': 135.1875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12001, 'coupling_correct_optimized': True, 'cost_reference': 12606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 25.90625, 'reference_time': 143.078125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13684, 'coupling_correct_optimized': True, 'cost_reference': 12269, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 25.71875, 'reference_time': 155.65625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20476, 'coupling_correct_optimized': True, 'cost_reference': 20867, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 27.078125, 'reference_time': 188.828125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10942, 'coupling_correct_optimized': True, 'cost_reference': 9780, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 25.296875, 'reference_time': 173.65625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11897, 'coupling_correct_optimized': True, 'cost_reference': 11595, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 26.265625, 'reference_time': 140.078125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.125, 'cost_optimized': 13126, 'coupling_correct_optimized': True, 'sim_time_opti': 0.265625, 'cost_reference': 13240, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+
+动态规划执行5q：(1.049435845401688, 16.31438786773437)
+{'optimizer_time': 0.40625, 'reference_time': 6.140625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 462, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.40625, 'reference_time': 6.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 526, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 6.265625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.375, 'reference_time': 6.890625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 492, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.453125, 'reference_time': 5.703125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 692, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.34375, 'reference_time': 5.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 6.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 522, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.390625, 'reference_time': 5.953125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 670, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.296875, 'reference_time': 6.21875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 548, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.328125, 'reference_time': 5.96875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 616, 'coupling_correct_optimized': True, 'sim_time_opti': 0.078125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+调整整体的ID之后，贪心的5Q：
+(1.1151846124492104, 16.870229829636248)
+动态规划的5Q：
+(1.1232044473160059, 16.496830095170864)
+
+
+调整整体ID之后，再加上合并U3：(1.1122103998844477, 4.659727239954075)
+{'optimizer_time': 2.171875, 'reference_time': 6.0625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.09375, 'reference_time': 6.578125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.046875, 'reference_time': 6.34375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.03125, 'reference_time': 6.671875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.546875, 'reference_time': 5.921875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.859375, 'reference_time': 5.5, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 434, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.875, 'reference_time': 6.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.671875, 'reference_time': 6.25, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 577, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.234375, 'reference_time': 7.109375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 471, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.953125, 'reference_time': 6.359375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 611, 'coupling_correct_optimized': True, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 21.671875, 'reference_time': 153.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12043, 'coupling_correct_optimized': True, 'cost_reference': 14866, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 23.015625, 'reference_time': 143.421875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20970, 'coupling_correct_optimized': True, 'cost_reference': 20145, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 23.28125, 'reference_time': 180.953125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10523, 'coupling_correct_optimized': True, 'cost_reference': 10156, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 21.703125, 'reference_time': 216.921875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12371, 'coupling_correct_optimized': True, 'cost_reference': 13825, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 22.921875, 'reference_time': 129.0, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11978, 'coupling_correct_optimized': True, 'cost_reference': 12606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 22.859375, 'reference_time': 135.71875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13505, 'coupling_correct_optimized': True, 'cost_reference': 12269, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 23.640625, 'reference_time': 146.78125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19978, 'coupling_correct_optimized': True, 'cost_reference': 20867, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 21.21875, 'reference_time': 181.1875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10662, 'coupling_correct_optimized': True, 'cost_reference': 9780, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 22.375, 'reference_time': 168.890625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13243, 'coupling_correct_optimized': True, 'cost_reference': 11595, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 22.984375, 'reference_time': 132.453125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 13095, 'coupling_correct_optimized': True, 'sim_time_opti': 0.25, 'cost_reference': 13240, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+
+合并U3之后
+(1.1122103998844477, 4.659727239954075)
+不合并U3
+(1.0343912432655977, 17.135771212219186)
+完整的情况下合并U3(1.054858539237038, 5.612519813604642)
+
+贪心选择的全局调整：
+5Q：(1.2646304791909557, 3.408160771839637)
+5Q+16Q：(1.108922710740707, 4.6660074833969665)
+
+穷举选择的全局调整：
+5Q：(1.2727202665257227, 3.4198677716930423)
+5Q+16Q：(1.1285299973901215, 3.7820382519194244)
+16Q(0.9959441275196591, 4.64677539157886)
+
+
+穷举选择的全局调整+贪心选择是否还原量子态：不好，结果太差
+
+
+
+穷举选择的全局调整+不合并U3
+5Q：(1.1323721980682002, 16.865696915603976)
+5Q+16Q:(1.0453873681989558, 10.515105318232548)
+
+全局穷举选择+所有Q贪心5个同时算：
+5Q：(1.273041103201399, 3.2256789340965093)
+5Q+16Q:(1.091814259582233, 3.4671933546807967)
+
+全局穷举选择+所有Q贪心,深度为4
+5Q:5Q：(1.273041103201399, 3.2256789340965093)
+16Q：(1.0046794869226983, 2.9664572222127443)
+20Q:(0.9488850497497041, 2.2578230927926453)
+整体：(1.0583013514328525, 2.6995474296753565)
+深度3：
+16Q：(1.0004973841354676, 3.770594765413906)
+
+adjustAllMap2:
+5Q:(1.193809867591191, 3.294067028946595)
+
+5-21
+在更新了qiskit0.4.15之后，结果为：
+5Q：(1.176918762974802, 3.375607761035676)
+{'optimizer_time': 2.390625, 'reference_time': 7.921875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.25, 'reference_time': 7.375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.09375, 'reference_time': 6.53125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.109375, 'reference_time': 6.046875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.84375, 'reference_time': 6.1875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.890625, 'reference_time': 6.703125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.953125, 'reference_time': 6.671875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.046875, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.703125, 'reference_time': 6.5625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 471, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.59375, 'reference_time': 6.546875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.046875, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q：(1.0154500918746756, 2.999780237868354)
+{'optimizer_time': 52.625, 'reference_time': 165.25, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13231, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 52.796875, 'reference_time': 177.953125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 21628, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 110.3125, 'reference_time': 191.109375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10073, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.125, 'reference_time': 220.953125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12515, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 49.9375, 'reference_time': 152.609375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12351, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 62.984375, 'reference_time': 168.453125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14839, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.046875, 'reference_time': 167.9375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20256, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 71.0, 'reference_time': 222.90625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9906, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.546875, 'reference_time': 269.578125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11483, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 74.421875, 'reference_time': 159.71875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.078125, 'cost_optimized': 12307, 'coupling_correct_optimized': True, 'sim_time_opti': 0.6875, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-21在全局量子比特id调整的过程中加入了depth的思考，cost = getInterQ/(depth+1)
+5Q:(1.1876478765160474, 3.5162174061192233)
+{'optimizer_time': 2.296875, 'reference_time': 7.8125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.21875, 'reference_time': 7.15625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.140625, 'reference_time': 6.3125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.21875, 'reference_time': 5.796875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.71875, 'reference_time': 6.46875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.625, 'reference_time': 6.6875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 434, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.84375, 'reference_time': 6.859375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.796875, 'reference_time': 7.03125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.765625, 'reference_time': 6.984375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 471, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.53125, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.02078090120822, 3.2754327231925138)
+{'optimizer_time': 50.875, 'reference_time': 166.0, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13528, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 51.53125, 'reference_time': 182.15625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20225, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 93.46875, 'reference_time': 202.84375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10036, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.546875, 'reference_time': 234.984375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12344, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 47.53125, 'reference_time': 150.78125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12755, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 59.0, 'reference_time': 166.171875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 14165, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.671875, 'reference_time': 165.921875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20280, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 59.203125, 'reference_time': 212.234375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9446, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.09375, 'reference_time': 257.359375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11872, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 62.28125, 'reference_time': 156.078125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 12812, 'coupling_correct_optimized': True, 'sim_time_opti': 0.21875, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-21晚：调整了evaluateCost函数，
+16Q:(1.0254497686431323, 2.8828521144671218)
+{'optimizer_time': 54.75, 'reference_time': 168.03125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13511, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 55.375, 'reference_time': 180.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20848, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 111.9375, 'reference_time': 193.328125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10175, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 48.46875, 'reference_time': 223.046875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11972, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 55.640625, 'reference_time': 154.5, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13206, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 67.6875, 'reference_time': 171.5, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13472, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 49.34375, 'reference_time': 172.0625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19974, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 74.046875, 'reference_time': 226.328125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9762, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 48.3125, 'reference_time': 267.734375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11767, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 78.953125, 'reference_time': 161.140625, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.078125, 'cost_optimized': 12108, 'coupling_correct_optimized': True, 'sim_time_opti': 0.59375, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+5Q:(1.1565963247946769, 3.27637472349572)
+{'optimizer_time': 1.671875, 'reference_time': 4.828125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 504, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.53125, 'reference_time': 5.140625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.484375, 'reference_time': 4.859375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.515625, 'reference_time': 5.0625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 473, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.40625, 'reference_time': 4.5, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.484375, 'reference_time': 4.234375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.4375, 'reference_time': 5.078125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.546875, 'reference_time': 4.8125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 850, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.390625, 'reference_time': 5.1875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 471, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.421875, 'reference_time': 4.890625, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 611, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-22:改成了len-depth
+5Q:(1.176918762974802, 3.2751287137980443)
+{'optimizer_time': 2.3125, 'reference_time': 8.015625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.234375, 'reference_time': 7.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.09375, 'reference_time': 6.421875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.3125, 'reference_time': 6.1875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.015625, 'reference_time': 6.53125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.15625, 'reference_time': 6.9375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.171875, 'reference_time': 7.0, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.1875, 'reference_time': 7.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.96875, 'reference_time': 7.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 471, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.828125, 'reference_time': 6.921875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-22深夜：全局用ec1，部分用ec2：
+16Q:(1.0378136549034795, 3.0044224566720064)
+{'optimizer_time': 53.109375, 'reference_time': 168.046875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13267, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 50.015625, 'reference_time': 184.1875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20414, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 117.46875, 'reference_time': 205.90625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9761, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 43.8125, 'reference_time': 240.828125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11824, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 53.46875, 'reference_time': 152.359375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12865, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 64.125, 'reference_time': 168.125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12640, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.4375, 'reference_time': 169.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20207, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 71.21875, 'reference_time': 219.4375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9559, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.140625, 'reference_time': 260.109375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12306, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 77.296875, 'reference_time': 160.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 12582, 'coupling_correct_optimized': True, 'sim_time_opti': 0.625, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+5Q:(1.1771758019893996, 3.16702903449197)
+{'optimizer_time': 2.5, 'reference_time': 7.625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.296875, 'reference_time': 7.328125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.234375, 'reference_time': 6.828125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.359375, 'reference_time': 6.015625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.1875, 'reference_time': 6.65625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.203125, 'reference_time': 7.171875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.234375, 'reference_time': 7.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 2.25, 'reference_time': 7.25, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.984375, 'reference_time': 7.171875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.875, 'reference_time': 7.109375, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.03125, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-23中午，改进了合并U3门的代码，效率提升;修改了evaluate2，不再重复添加bad cnot的开销
+5Q:(1.1771758019893996, 4.933034069519274)
+{'optimizer_time': 1.625, 'reference_time': 8.015625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.53125, 'reference_time': 7.5, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.4375, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.515625, 'reference_time': 6.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.296875, 'reference_time': 6.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.328125, 'reference_time': 6.65625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.3125, 'reference_time': 6.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.359375, 'reference_time': 6.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.28125, 'reference_time': 6.71875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.125, 'reference_time': 6.640625, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.0, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.0703767337982824, 3.359736601833154)
+{'optimizer_time': 46.234375, 'reference_time': 169.484375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13129, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 44.171875, 'reference_time': 183.265625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19677, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 110.65625, 'reference_time': 195.296875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9838, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 37.484375, 'reference_time': 233.96875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11789, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.8125, 'reference_time': 154.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11769, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 58.0, 'reference_time': 170.265625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12397, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.5, 'reference_time': 172.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19591, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 65.265625, 'reference_time': 237.546875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9484, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.390625, 'reference_time': 270.421875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11997, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 71.84375, 'reference_time': 159.640625, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 11481, 'coupling_correct_optimized': True, 'sim_time_opti': 0.578125, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-24晚：调整了allmap里面生成字典的方式：
+5Q：(1.1873081676851593, 4.973230243437185)
+{'optimizer_time': 1.59375, 'reference_time': 7.734375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.46875, 'reference_time': 7.453125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.4375, 'reference_time': 6.640625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.515625, 'reference_time': 6.109375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.203125, 'reference_time': 6.296875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.328125, 'reference_time': 6.640625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.28125, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.296875, 'reference_time': 6.71875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.265625, 'reference_time': 6.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.140625, 'reference_time': 6.4375, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q：(1.0504233422466116, 3.426939233625856)
+{'optimizer_time': 46.0625, 'reference_time': 161.96875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13550, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 43.046875, 'reference_time': 179.296875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 20322, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 94.25, 'reference_time': 200.859375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9549, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 37.4375, 'reference_time': 234.9375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11762, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.46875, 'reference_time': 149.78125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11790, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 56.75, 'reference_time': 164.5625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13916, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.921875, 'reference_time': 164.515625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19702, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 62.53125, 'reference_time': 210.328125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9961, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 37.6875, 'reference_time': 249.5625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11354, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 67.5625, 'reference_time': 158.75, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 11826, 'coupling_correct_optimized': True, 'sim_time_opti': 0.578125, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-27晚上：
+5Q:(1.1873081676851593, 5.054733458325687)
+{'optimizer_time': 1.546875, 'reference_time': 7.53125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.515625, 'reference_time': 7.265625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.421875, 'reference_time': 6.71875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.484375, 'reference_time': 6.140625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.15625, 'reference_time': 6.671875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.40625, 'reference_time': 7.078125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.40625, 'reference_time': 7.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.46875, 'reference_time': 7.21875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.21875, 'reference_time': 7.09375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.1875, 'reference_time': 7.046875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.0, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.0538088625322997, 3.4225244542998197)
+{'optimizer_time': 46.125, 'reference_time': 168.15625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13034, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 43.515625, 'reference_time': 185.21875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19668, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 97.90625, 'reference_time': 206.375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10354, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.421875, 'reference_time': 245.5625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11765, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 47.890625, 'reference_time': 153.71875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11704, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 58.890625, 'reference_time': 169.359375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13810, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.703125, 'reference_time': 169.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19427, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 63.625, 'reference_time': 218.921875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9445, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 40.328125, 'reference_time': 261.9375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12047, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 69.421875, 'reference_time': 160.765625, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 11679, 'coupling_correct_optimized': True, 'sim_time_opti': 0.578125, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-28早：
+5Q:(1.1873081676851593, 5.383143559571135)
+{'optimizer_time': 1.6875, 'reference_time': 8.359375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.59375, 'reference_time': 7.71875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.5, 'reference_time': 6.875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.578125, 'reference_time': 6.296875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.203125, 'reference_time': 7.109375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.28125, 'reference_time': 7.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.3125, 'reference_time': 7.53125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.296875, 'reference_time': 7.734375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.15625, 'reference_time': 7.609375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.0625, 'reference_time': 7.359375, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.0731297665334207, 3.361749510586874)
+{'optimizer_time': 49.640625, 'reference_time': 174.515625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13830, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.921875, 'reference_time': 191.140625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19265, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 105.1875, 'reference_time': 211.890625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9792, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 42.1875, 'reference_time': 249.125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11761, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.6875, 'reference_time': 157.765625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11362, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 61.265625, 'reference_time': 173.84375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13334, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.046875, 'reference_time': 173.46875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19255, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 65.265625, 'reference_time': 221.59375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9406, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 40.59375, 'reference_time': 262.21875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11728, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 72.71875, 'reference_time': 163.546875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 10902, 'coupling_correct_optimized': True, 'sim_time_opti': 0.609375, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-28中午：
+5Q：(1.1873081676851593, 5.233056300727676)
+{'optimizer_time': 1.75, 'reference_time': 8.15625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.625, 'reference_time': 7.96875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.4375, 'reference_time': 7.140625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.625, 'reference_time': 6.328125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.25, 'reference_time': 6.84375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.328125, 'reference_time': 7.46875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.421875, 'reference_time': 7.75, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.359375, 'reference_time': 7.65625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.203125, 'reference_time': 7.40625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.15625, 'reference_time': 7.6875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.03125, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.0813576354027463, 3.614076123173495)
+{'optimizer_time': 48.234375, 'reference_time': 169.71875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12952, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 43.078125, 'reference_time': 186.0625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19081, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 101.828125, 'reference_time': 206.734375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9764, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 36.578125, 'reference_time': 247.609375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11818, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 44.078125, 'reference_time': 159.609375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11661, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 52.875, 'reference_time': 174.390625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12123, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.625, 'reference_time': 174.1875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18720, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 60.375, 'reference_time': 225.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9624, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 36.96875, 'reference_time': 265.171875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11791, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 65.875, 'reference_time': 165.796875, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 11797, 'coupling_correct_optimized': True, 'sim_time_opti': 0.671875, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-28晚：
+5Q：(1.1873081676851593, 5.059092971999085)
+{'optimizer_time': 1.828125, 'reference_time': 8.390625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.609375, 'reference_time': 7.84375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.46875, 'reference_time': 7.015625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.671875, 'reference_time': 6.5625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.234375, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.34375, 'reference_time': 6.9375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.328125, 'reference_time': 6.953125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.328125, 'reference_time': 6.953125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 506, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.1875, 'reference_time': 7.03125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.09375, 'reference_time': 6.9375, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q：(1.098873431004966, 3.5197411677938355)
+{'optimizer_time': 47.1875, 'reference_time': 182.921875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 13025, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.734375, 'reference_time': 202.203125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18738, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 110.15625, 'reference_time': 222.140625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9556, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 38.53125, 'reference_time': 257.71875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11199, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 48.78125, 'reference_time': 162.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11870, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 58.078125, 'reference_time': 178.953125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12505, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.78125, 'reference_time': 178.03125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 17526, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 65.109375, 'reference_time': 233.375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9459, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.109375, 'reference_time': 277.21875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11665, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 71.515625, 'reference_time': 168.09375, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.109375, 'cost_optimized': 11387, 'coupling_correct_optimized': True, 'sim_time_opti': 0.578125, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-29中午：
+5Q：(1.1790330412231989, 4.975302488181546)
+{'optimizer_time': 1.75, 'reference_time': 8.234375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.609375, 'reference_time': 7.671875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.46875, 'reference_time': 6.796875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.65625, 'reference_time': 6.25, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.359375, 'reference_time': 6.640625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.359375, 'reference_time': 7.078125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.46875, 'reference_time': 7.078125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.0625, 'reference_time': 7.328125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 542, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.34375, 'reference_time': 7.203125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.203125, 'reference_time': 7.046875, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.0, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.1170140987714032, 3.3908921972736943)
+{'optimizer_time': 45.71875, 'reference_time': 171.671875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12280, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.546875, 'reference_time': 186.171875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 19500, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 115.546875, 'reference_time': 203.6875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 8862, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.90625, 'reference_time': 232.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11427, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 45.484375, 'reference_time': 161.171875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11880, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 60.078125, 'reference_time': 181.125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 12207, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 40.8125, 'reference_time': 179.796875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18961, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 67.125, 'reference_time': 235.734375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 8565, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 38.484375, 'reference_time': 277.984375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11689, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 73.84375, 'reference_time': 169.640625, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.5, 'cost_optimized': 10924, 'coupling_correct_optimized': True, 'sim_time_opti': 0.265625, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+5-29下午：
+5Q：(1.1790330412231989, 5.273024671286818)
+{'optimizer_time': 1.703125, 'reference_time': 8.34375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.625, 'reference_time': 7.859375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.53125, 'reference_time': 6.859375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.71875, 'reference_time': 6.421875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.234375, 'reference_time': 6.8125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.25, 'reference_time': 7.234375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.34375, 'reference_time': 7.09375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 0.953125, 'reference_time': 7.15625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 542, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.21875, 'reference_time': 7.328125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.0625, 'reference_time': 7.0, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.0, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.03125, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q:(1.1311466728099062, 3.3861308222571203)
+{'optimizer_time': 47.890625, 'reference_time': 178.40625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11822, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 47.0625, 'reference_time': 194.46875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18270, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 120.5, 'reference_time': 215.734375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9142, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.171875, 'reference_time': 254.046875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11496, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.859375, 'reference_time': 164.390625, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11861, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 59.375, 'reference_time': 181.484375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11443, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 39.734375, 'reference_time': 180.21875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18367, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 68.828125, 'reference_time': 235.046875, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 8903, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 42.5, 'reference_time': 275.4375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11631, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 76.0, 'reference_time': 171.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.484375, 'cost_optimized': 10973, 'coupling_correct_optimized': True, 'sim_time_opti': 0.234375, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+
+将max调整为3：
+5Q:(1.1790330412231989, 5.064830125940623)
+16Q:(1.1179109068969675, 4.421861428314624)
+
+将max调整为2：
+5Q：(1.1324851156747566, 5.600583582174723)
+16Q：(1.104927428502416, 5.075455136869927)
+
+
+5-30中午：
+5Q：(1.1790330412231989, 5.19539879007518)
+{'optimizer_time': 1.65625, 'reference_time': 7.96875, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 400, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.546875, 'reference_time': 7.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 400, 'coupling_correct_optimized': True, 'cost_reference': 505, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.421875, 'reference_time': 6.59375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 471, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.59375, 'reference_time': 6.265625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 401, 'coupling_correct_optimized': True, 'cost_reference': 467, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.265625, 'reference_time': 6.625, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 540, 'coupling_correct_optimized': True, 'cost_reference': 783, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.296875, 'reference_time': 7.09375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 436, 'coupling_correct_optimized': True, 'cost_reference': 469, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.34375, 'reference_time': 6.953125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 435, 'coupling_correct_optimized': True, 'cost_reference': 537, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.0, 'reference_time': 7.078125, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 542, 'coupling_correct_optimized': True, 'cost_reference': 609, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.1875, 'reference_time': 7.109375, 'cost_original': 360, 'coupling_correct_original': False, 'cost_optimized': 470, 'coupling_correct_optimized': True, 'cost_reference': 539, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 1.15625, 'reference_time': 6.890625, 'cost_original': 360, 'coupling_correct_original': False, 'sim_time_orig': 0.015625, 'cost_optimized': 505, 'coupling_correct_optimized': True, 'sim_time_opti': 0.015625, 'cost_reference': 710, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+16Q：(1.142234426411678, 3.351286598964191)
+{'optimizer_time': 46.53125, 'reference_time': 168.828125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11284, 'coupling_correct_optimized': True, 'cost_reference': 12888, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 44.046875, 'reference_time': 187.375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18410, 'coupling_correct_optimized': True, 'cost_reference': 21996, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 112.0625, 'reference_time': 209.078125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 9135, 'coupling_correct_optimized': True, 'cost_reference': 10004, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 36.640625, 'reference_time': 247.359375, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 10941, 'coupling_correct_optimized': True, 'cost_reference': 12957, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 46.375, 'reference_time': 157.328125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11725, 'coupling_correct_optimized': True, 'cost_reference': 11749, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 61.078125, 'reference_time': 173.8125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11722, 'coupling_correct_optimized': True, 'cost_reference': 13606, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 40.046875, 'reference_time': 172.53125, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 18642, 'coupling_correct_optimized': True, 'cost_reference': 20430, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 66.5, 'reference_time': 225.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 8872, 'coupling_correct_optimized': True, 'cost_reference': 10069, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 41.046875, 'reference_time': 269.75, 'cost_original': 4608, 'coupling_correct_original': False, 'cost_optimized': 11294, 'coupling_correct_optimized': True, 'cost_reference': 14027, 'coupling_correct_reference': True, 'state_correct_optimized': True}
+{'optimizer_time': 76.171875, 'reference_time': 164.125, 'cost_original': 4608, 'coupling_correct_original': False, 'sim_time_orig': 0.09375, 'cost_optimized': 10944, 'coupling_correct_optimized': True, 'sim_time_opti': 0.5625, 'cost_reference': 13242, 'coupling_correct_reference': True, 'state_correct_optimized': True}

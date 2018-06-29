@@ -41,7 +41,7 @@ from qiskit.tools.qi.qi import state_fidelity
 
 
 
-def score(compiler_function=None,backend = 'local_qiskit_simulator'):
+def score(depth,cmap,qnum,compiler_function=None,backend = 'local_qiskit_simulator'):
     """
     Scores a compiler function based on a selected set of circuits and layouts
     available in the two respective subfolders.
@@ -55,20 +55,88 @@ def score(compiler_function=None,backend = 'local_qiskit_simulator'):
         float : score, speed
     """
     # Load coupling maps
-    maps_q5 = ["circle_rand_q5","ibmqx2_q5","linear_rand_q5","ibmqx4_q5","linear_reg_q5"]
-    maps_q16 = ["ibmqx3_q16", "linear_rand_q16", "rect_rand_q16", "rect_def_q16", "ibmqx5_q16"]
-    maps_q20 = ["circle_reg_q20", "linear_rand_q20", "rect_rand_q20", "rect_def_q20", "rect_reg_q20"]
+    maps_q3 = ["circle_3","linear_3","neighbour_3","center_3"]
+    maps_q4 = ["circle_4","linear_4","neighbour_4","center_4"]
+    maps_q5 = ["circle_5","linear_5","neighbour_5","center_5"]
+    maps_q6 = ["circle_6","linear_6","neighbour_6","center_6"]
+    maps_q7 = ["circle_7","linear_7","neighbour_7","center_7"]
+    maps_q8 = ["circle_8","linear_8","neighbour_8","center_8"]
+    maps_q9 = ["circle_9","linear_9","neighbour_9","center_9"]
+    maps_q10 = ["circle_10","linear_10","neighbour_10","center_10"]
+    maps_q11 = ["circle_11","linear_11","neighbour_11","center_11"]
+    maps_q12 = ["circle_12","linear_12","neighbour_12","center_12"]
+    maps_q13 = ["circle_13","linear_13","neighbour_13","center_13"]
+    maps_q14 = ["circle_14","linear_14","neighbour_14","center_14"]
+    maps_q15 = ["circle_15","linear_15","neighbour_15","center_15"]
+    maps_q16 = ["circle_16","linear_16","neighbour_16","center_16"]
+    #maps_q5 = ["circle_rand_q5","ibmqx2_q5","linear_rand_q5","ibmqx4_q5","linear_reg_q5"]
+    #maps_q16 = ["ibmqx3_q16", "linear_rand_q16", "rect_rand_q16", "rect_def_q16", "ibmqx5_q16"]
+    #maps_q20 = ["circle_reg_q20", "linear_rand_q20", "rect_rand_q20", "rect_def_q20", "rect_reg_q20"]
 
     # Load circuits files
     ex_nr = 10  # examples to add per qubit number. maximum is 10
     test_circuit_filenames = {}
+    mapss = []
+    if qnum == 10:
+        mapss = maps_q10
+    elif qnum ==11:
+        mapss = maps_q11
+    elif qnum == 12:
+        mapss = maps_q12
+    elif qnum == 13:
+        mapss = maps_q13
+    elif qnum == 14:
+        mapss = maps_q14
+    elif qnum == 15:
+        mapss = maps_q15
+    elif qnum == 9:
+        mapss = maps_q9
+    else:
+        pass
+    for ii in range(ex_nr):
+        #test_circuit_filenames['circuits/random%d_n15_d16.qasm' % ii] = load_coupling(maps_q15[1])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n8_d11.qasm' % ii] = load_coupling(maps_q8[3])["coupling_map"]
+        test_circuit_filenames['circuits/random%d_n%d_d%d.qasm' % (ii,qnum,depth)] = load_coupling(mapss[cmap])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n10_d1.qasm' % ii] = load_coupling(maps_q10[0])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n11_d1.qasm' % ii] = load_coupling(maps_q11[0])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n12_d1.qasm' % ii] = load_coupling(maps_q12[0])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n13_d1.qasm' % ii] = load_coupling(maps_q13[0])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n14_d1.qasm' % ii] = load_coupling(maps_q14[0])["coupling_map"]
+        #test_circuit_filenames['circuits/random%d_n15_d1.qasm' % ii] = load_coupling(maps_q15[0])["coupling_map"]
+    # for jj in range(16):
+    #     for ii in range(ex_nr):
+    #         test_circuit_filenames['circuits/random%d_n16_d%d.qasm' % (ii,jj+1)] = load_coupling(maps_q16[0%len(maps_q16)])["coupling_map"]
+    # for jj in range(16):
+    #     for ii in range(ex_nr):
+    #         test_circuit_filenames['circuits/random%d_n16_d%d.qasm' % (ii,jj+1)] = load_coupling(maps_q16[1%len(maps_q16)])["coupling_map"]
+    # for jj in range(16):
+    #     for ii in range(ex_nr):
+    #         test_circuit_filenames['circuits/random%d_n16_d%d.qasm' % (ii,jj+1)] = load_coupling(maps_q16[2%len(maps_q16)])["coupling_map"]
+    # for jj in range(16):
+    #     for ii in range(ex_nr):
+    #         test_circuit_filenames['circuits/random%d_n16_d%d.qasm' % (ii,jj+1)] = load_coupling(maps_q16[3%len(maps_q16)])["coupling_map"]    
+        
+    
+    
+    # for ii in range(ex_nr):
+    #     test_circuit_filenames['circuits/random%d_n16_d16.qasm' % ii] = load_coupling(maps_q16[ii%len(maps_q16)])["coupling_map"]
+    # for ii in range(ex_nr):
+    #     test_circuit_filenames['circuits/random%d_n20_d20.qasm' % ii] = load_coupling(maps_q20[ii%len(maps_q20)])["coupling_map"]
+    #for ii in range(ex_nr):
+        #test_circuit_filenames['circuits/random%d_n5_d5.qasm' % ii] = load_coupling(maps_q5[ii%len(maps_q5)])["coupling_map"]
+    # for ii in range(ex_nr):
+    #     test_circuit_filenames['circuits/random%d_n16_d16.qasm' % ii] = load_coupling(maps_q16[ii%len(maps_q16)])["coupling_map"]
+    # for ii in range(ex_nr):
+    #     test_circuit_filenames['circuits/random%d_n20_d20.qasm' % ii] = load_coupling(maps_q20[ii%len(maps_q20)])["coupling_map"]
     #for ii in range(ex_nr):
         #test_circuit_filenames['circuits/random%d_n5_d5.qasm' % ii] = load_coupling(maps_q5[ii%len(maps_q5)])["coupling_map"]
     #for ii in range(ex_nr):
         #test_circuit_filenames['circuits/random%d_n16_d16.qasm' % ii] = load_coupling(maps_q16[ii%len(maps_q16)])["coupling_map"]
     #for ii in range(ex_nr):
         #test_circuit_filenames['circuits/random%d_n20_d20.qasm' % ii] = load_coupling(maps_q20[ii%len(maps_q20)])["coupling_map"]
-    test_circuit_filenames['circuits/random%d_n5_d5.qasm' % 0] = load_coupling(maps_q5[0])["coupling_map"]
+    #test_circuit_filenames['circuits/random%d_n16_d16.qasm' % 0] = load_coupling(maps_q16[0])["coupling_map"]
+    #test_circuit_filenames['circuits/random%d_n5_d5.qasm' % 5] = load_coupling(maps_q5[0])["coupling_map"]
+    #test_circuit_filenames['circuits/random%d_n20_d20.qasm' % 3] = load_coupling(maps_q20[3])["coupling_map"]
     # Load example circuits and coupling maps
 
 
@@ -77,10 +145,13 @@ def score(compiler_function=None,backend = 'local_qiskit_simulator'):
         with open(filename, 'r') as infile:
             qasm = infile.read()
             test_circuits[filename] = {"qasm": qasm, "coupling_map": cmap}
+    
+    #将verbose设置为False，则不会执行IBM的标准算法
     res = evaluate(compiler_function, test_circuits, verbose=True, backend = backend)
     res_scores=[]
+    for k in res.keys():
+        print(res[k])
     for name in res:
-        print(res[name])
         if (res[name]["optimizer_time"] > 0) and res[name]["coupling_correct_optimized"]:
             # only add the score if the QISKit reference compiler worked well
             if (res[name]["reference_time"] > 0) and res[name]["coupling_correct_reference"]:
@@ -90,7 +161,7 @@ def score(compiler_function=None,backend = 'local_qiskit_simulator'):
             # the user compiler had an error or did not produce the right quantum state
             # this returns a value which is half as good as the reference
             res_scores.append([2,2])
-    return (1./np.mean([ii[0] for ii in res_scores]), 1./np.mean([ii[1] for ii in res_scores]))
+    return [(1./np.mean([ii[0] for ii in res_scores]), 1./np.mean([ii[1] for ii in res_scores])),res]
 
 
 def evaluate(compiler_function=None, test_circuits=None, verbose=False, backend = 'local_qiskit_simulator'):
@@ -224,6 +295,7 @@ def evaluate(compiler_function=None, test_circuits=None, verbose=False, backend 
 
         # Run simulation
         time_start = time.process_time()
+        #print(qobj_original['config'])
         res_original = qp.run(qobj_original, timeout=GLOBAL_TIMEOUT)
         results[name]["sim_time_orig"] = time.process_time() - time_start
 

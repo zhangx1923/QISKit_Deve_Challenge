@@ -1,0 +1,1 @@
+{"coupling_map": {"0": [1], "1": [2], "2": [3], "3": [4], "4": [5], "5": [6], "6": [7], "7": [8], "8": [9], "9": [10], "10": [11], "11": [12], "12": [13]}, "qubits": 14, "name": "linear_14", "description": "Line of 14 qubits with random cx directions and a probability of100.0% for coupling from left to right.", "position": [[0.0, 0], [0.2, 0], [0.4, 0], [0.6, 0], [0.8, 0]]}

@@ -1,0 +1,1 @@
+{"coupling_map": {"0": [1,2,3,4,5,6,7]}, "qubits": 8, "name": "center_8", "description": "center of 8 qubits with random cx directions and a probability of100.0% for coupling from left to right.", "position": [[0.0, 0], [0.2, 0], [0.4, 0], [0.6, 0], [0.8, 0]]}
